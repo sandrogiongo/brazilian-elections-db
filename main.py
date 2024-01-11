@@ -57,7 +57,7 @@ if __name__ == '__main__':
     class Locais(Base):
         __tablename__ = 'locais'
         id_local = Column(SmallInteger, primary_key=True, autoincrement=True)
-        id_zona_eleitoral = Column(String(length=5))
+        id_zona_eleitoral = Column(SmallInteger)
         unidade_federacao = Column(Enum(*siglas_uf_enum, name='estados_enum'))
         id_municipio = Column(Integer, ForeignKey('municipios.id'))    
 
