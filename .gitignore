@@ -1,3 +1,10 @@
+# Ignore configuration files
+config.json
+
+# Ignore database folders
+data/
+db/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
