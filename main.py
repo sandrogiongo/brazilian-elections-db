@@ -24,6 +24,11 @@ if __name__ == '__main__':
     # Read csv file and create dataframe
     df = pd.read_csv(file_path, encoding='latin-1', sep=';')
 
+    # Define a dictionary for replacement
+    replacement_dict = {"#NULO#": None, -1: None}
+
+    # Replace null values in the entire DataFrame
+    df.replace(replacement_dict, inplace=True)
 
     # Define columns categories
     siglas_uf_enum = (
