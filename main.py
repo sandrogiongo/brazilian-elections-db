@@ -57,62 +57,62 @@ if __name__ == '__main__':
     class Municipios(Base):
         __tablename__ = 'municipios'
         id = Column(Integer, primary_key=True)
-        nome = Column(String)
+        nome = Column(String, nullable=False)
 
     class Locais(Base):
         __tablename__ = 'locais'
         id_local = Column(SmallInteger, primary_key=True, autoincrement=True)
-        id_zona_eleitoral = Column(SmallInteger)
-        unidade_federacao = Column(Enum(*siglas_uf_enum, name='estados_enum'))
-        id_municipio = Column(Integer, ForeignKey('municipios.id'))    
+        id_zona_eleitoral = Column(String(length=5), nullable=False)
+        unidade_federacao = Column(Enum(*siglas_uf_enum, name='estados_enum'), nullable=False)
+        id_municipio = Column(Integer, ForeignKey('municipios.id'), nullable=False)    
 
     class Partidos(Base):
         __tablename__ = 'partidos'
         sigla = Column(String(length=10), primary_key=True)
-        nome = Column(String)
-        numero = Column(SmallInteger)
+        nome = Column(String, nullable=False)
+        numero = Column(SmallInteger, nullable=False)
         
     class Cargo(Base):
         __tablename__ = 'cargo'
         id = Column(SmallInteger, primary_key=True)
-        cargo = Column(String)
+        cargo = Column(String, nullable=False)
 
     class Situacao(Base):
         __tablename__ = 'situacao'
         id = Column(SmallInteger, primary_key=True)
-        situacao = Column(String)
+        situacao = Column(String, nullable=False)
 
     class Federacao(Base):
         __tablename__ = 'federacao'
         numero = Column(Integer, primary_key=True)
-        nome = Column(String)
+        nome = Column(String, nullable=False)
         sigla = Column(String(length=10))
         composicao = Column(String)
 
     class Coligacao(Base):
         __tablename__ = 'coligacao'
         numero = Column(BigInteger, primary_key=True)
-        nome = Column(String)
-        composicao = Column(String)
+        nome = Column(String, nullable=False)
+        composicao = Column(String, nullable=False)
 
     class SituacaoDetalhe(Base):
         __tablename__ = 'situacao_detalhe'
         id = Column(SmallInteger, primary_key=True)
-        descricao = Column(String(length=50))
+        descricao = Column(String(length=50), nullable=False)
 
     class Candidato(Base):
         __tablename__ = 'candidato'
         id = Column(BigInteger, primary_key=True)
-        nome = Column(String)
-        nome_urna = Column(String)
+        nome = Column(String, nullable=False)
+        nome_urna = Column(String, nullable=False)
         nome_social = Column(String)
-        numero_candidatura = Column(SmallInteger)
+        numero_candidatura = Column(SmallInteger, nullable=False)
         unidade_eleitoral_sigla = Column(String(length=50))
         unidade_eleitoral = Column(String)
         tipo_agremiacao = Column(Enum(*agremiacao_enum, name='agremiacao_enum'))
-        cargo = Column(SmallInteger, ForeignKey('cargo.id'))
+        cargo = Column(SmallInteger, ForeignKey('cargo.id'), nullable=False)
         situacao = Column(SmallInteger, ForeignKey('situacao.id'))
-        partido = Column(String(length=10), ForeignKey('partidos.sigla'))
+        partido = Column(String(length=10), ForeignKey('partidos.sigla'), nullable=False)
         federacao = Column(Integer, ForeignKey('federacao.numero'))
         coligacao = Column(BigInteger, ForeignKey('coligacao.numero'))
         situacao_detalhe = Column(SmallInteger, ForeignKey('situacao_detalhe.id'))
@@ -120,25 +120,25 @@ if __name__ == '__main__':
     class Eleicao(Base):
         __tablename__ = 'eleicao'
         id = Column(Integer, primary_key=True)
-        tipo = Column(Enum(*tipo_eleicao_enum, name='tipo_eleicao_enum'))
-        turno = Column(SmallInteger)
+        tipo = Column(Enum(*tipo_eleicao_enum, name='tipo_eleicao_enum'), nullable=False)
+        turno = Column(SmallInteger, nullable=False)
         descricao = Column(String)
-        data = Column(Date)
+        data = Column(Date, nullable=False)
         abrangencia = Column(Enum(*abrangencia_enum, name='abrangencia_enum'))
 
     class SituacaoTotalizacao(Base):
         __tablename__ = 'situacao_totalizacao'
         id = Column(SmallInteger, primary_key=True)
-        descricao = Column(String(length=50))
+        descricao = Column(String(length=50), nullable=False)
 
     class QtdVotos(Base):
         __tablename__ = 'qtd_votos'
         id = Column(Integer, primary_key=True, autoincrement=True)
-        eleicao = Column(Integer, ForeignKey('eleicao.id'))
-        candidato = Column(BigInteger, ForeignKey('candidato.id'))
-        turno = Column(Enum(*turno_enum, name='turno_enum'))
-        local = Column(Integer, ForeignKey('locais.id_local'))
-        qtd_votos = Column(Integer)
+        eleicao = Column(Integer, ForeignKey('eleicao.id'), nullable=False)
+        candidato = Column(BigInteger, ForeignKey('candidato.id'), nullable=False)
+        turno = Column(Enum(*turno_enum, name='turno_enum'), nullable=False)
+        local = Column(Integer, ForeignKey('locais.id_local'), nullable=False)
+        qtd_votos = Column(Integer, nullable=False)
         voto_em_transito = Column(Boolean)
         tipo_destinacao = Column(String(length=50))
         qtd_votos_validos = Column(Integer)
